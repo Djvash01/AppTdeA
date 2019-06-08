@@ -11,7 +11,7 @@ const CourseSchema = new Schema({
     status:{type: String, default:'disponible'},
     enrollees:[{
         dni:{type: String, required:true},
-        nameCourse:{type: String, required:true},
+        name:{type: String, required:true},
         email:{type: String, required:true},
         phone:{type:String, required:true}
     }],
