@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const URI = 'mongodb://localhost/apptdea';
 
-mongoose.connect(URI,
+mongoose.connect(process.env.MONGODB_URI,
     {useNewUrlParser:true,
         useCreateIndex: true,
         useFindAndModify: false
