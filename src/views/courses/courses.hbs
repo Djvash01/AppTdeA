@@ -1,0 +1,42 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4">
+            <form action="/api/courses" id="course-form" class="card card-body" method="POST">
+                <div class="form-group">
+                    <input type="text" name="id" class="form-control" placeholder="Codigo del curso" autofocus required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="nameCourse" class="form-control" placeholder="Nombre del curso" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="description" class="form-control" placeholder="Descripcion del curso"
+                        required>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="cost" class="form-control" placeholder="Costo del curso [COP]" required>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="mode">Modalidad</label>
+                        </div>
+                        <select class="custom-select" id="mode" name="mode">
+                            <option selected disabled></option>
+                            <option value="Virtual">Virtual</option>
+                            <option value="Presencial">Presencial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="hours" class="form-control" placeholder="Duracion">
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">
+                    Guardar
+                </button>
+            </form>
+        </div>
+        <div class="col-md-8" id="course-cards">
+
+        </div>
+    </div>
+</div>

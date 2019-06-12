@@ -7,6 +7,14 @@ router.get('/available/', async (req, res)=>{
     res.json(courses);
 });
 
+router.get('/applicant',(req,res)=>{
+    res.render('courses/applicant');
+});
+
+router.get('/form',(req,res)=>{
+    res.render('courses/courses');
+});
+
 router.get('/', async (req, res)=>{
     const courses = await Course.find();
     res.json(courses);
