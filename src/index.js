@@ -5,6 +5,7 @@ if(process.env.NODE_ENV !== 'production'){ // Para saber si se esta en productio
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const cors = require('cors');
 
 //Initializations
 const app = express();
@@ -17,6 +18,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
+app.use(cors());
 
 //Routes
 app.use('/api/courses',require('./routes/courses.routes'));

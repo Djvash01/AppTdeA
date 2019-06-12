@@ -8,7 +8,7 @@ const CourseSchema = new Schema({
     cost:{type: Number, required:true},
     mode:{type:String},
     hours:{type: Number},
-    status:{type: String, default:'disponible'},
+    status:{type: String, default:'Disponible'},
     enrollees:[{
         dni:{type: String, required:true},
         name:{type: String, required:true},
