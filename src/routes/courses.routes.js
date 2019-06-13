@@ -28,12 +28,15 @@ router.get('/:id', async (req, res) =>{
 router.post('/', async (req, res)=>{
     const {id,nameCourse,description,cost,mode,hours} = req.body;
     const course = new Course({id,nameCourse,description,cost,mode,hours});
+    const answer=[];
     try{
         await course.save();
-        res.json({status: 'Course saved'});
+        answer.push({status: 'success', description: 'Course saved'});
+        res.render('courses/courses',{answer});
     }catch(err){
         console.log('error',err);
-        res.json({status: 'Failed', description: 'El id del curso ya esta en uso'});
+        answer.push({status: 'danger', description: 'El id del curso ya esta en uso'});
+        res.render('courses/courses',{answer});
     }
     
 });
