@@ -417,6 +417,7 @@ $RECYCLE.BIN/
 
 #Archivos Propios
 .env
+.vscode/*
 
 
 # End of https://www.gitignore.io/api/node,linux,macos,angular,windows,sonarqube,reactnative,visualstudiocode

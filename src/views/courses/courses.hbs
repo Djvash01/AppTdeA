@@ -1,13 +1,3 @@
-{{#each answer}}
-    <div class="alert alert-{{status}} alert-dismissible fade show" role="alert">
-        {{description}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{/each}}
-
-
 <div class="container p-4">
     <div class="row">
         <div class="col-md-4">
@@ -40,13 +30,51 @@
                 <div class="form-group">
                     <input type="number" name="hours" class="form-control" placeholder="Duracion">
                 </div>
-                <button class="btn btn-primary btn-block" type="submit">
+                <button class="btn btn-success btn-block" type="submit">
                     Guardar
                 </button>
             </form>
         </div>
         <div class="col-md-8" id="course-cards">
-
+            {{#each courses}}
+                <div class="card m-4">
+                    <div class="card-body">
+                        <h4 class="card-title d-flex justify-content-between align-items-center">
+                            {{nameCourse}}
+                        </h4>
+                        <div>
+                            {{#if status}}
+                                <span class="badge badge-success">Disponible</span>
+                            {{else}}
+                                <span class="badge badge-danger">Cerrado</span>
+                            {{/if}}
+                        </div>
+                        <p class="card-text"><strong>Codigo: </strong>{{id}}</p>
+                        <p class="card-text"><strong>Descripcion: </strong>{{description}}</p>
+                        <p class="card-text"><strong>Costo: </strong>{{cost}}</p>
+                        <p class="card-text"><strong>Modalidad: </strong>{{mode}}</p>
+                        <p class="card-text"><strong>Duraccion: </strong>{{hours}}</p>
+                       
+                        <div class="card-footer">
+                            {{#if status}}
+                                <form action="/api/courses/{{_id}}?_method=PUT" method="POST">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-danger btn-block">
+                                            Cerrar
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                
+                            {{else}}
+                                <span class="badge badge-info">Curso Cerrado</span>
+                            {{/if}}
+                            
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
         </div>
     </div>
 </div>

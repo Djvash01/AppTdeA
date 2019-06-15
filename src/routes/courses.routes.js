@@ -2,22 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Course = require('../models/course');
 
-router.get('/available/', async (req, res)=>{
-    const courses = await Course.find({status:'disponible'});
-    res.json(courses);
-});
-
-router.get('/applicant',(req,res)=>{
-    res.render('courses/applicant');
-});
-
-router.get('/form',(req,res)=>{
-    res.render('courses/courses');
+router.get('/applicant/', async (req, res)=>{
+    const courses = await Course.find({status:'Disponible'});
+    res.render('courses/applicant',{courses});
 });
 
 router.get('/', async (req, res)=>{
-    const courses = await Course.find();
-    res.json(courses);
+    const courses = await Course.find().sort({created_at:'desc'});
+    res.render('courses/courses',{courses});
 });
 
 router.get('/:id', async (req, res) =>{
@@ -32,7 +24,11 @@ router.post('/', async (req, res)=>{
     try{
         await course.save();
         answer.push({status: 'success', description: 'Course saved'});
-        res.render('courses/courses',{answer});
+        const courses = await Course.find().sort({created_at:'desc'});
+        res.render('courses/courses',{
+            courses,
+            answer
+        });
     }catch(err){
         console.log('error',err);
         answer.push({status: 'danger', description: 'El id del curso ya esta en uso'});
@@ -61,9 +57,14 @@ router.put('/enroll/:id', async (req, res) =>{
 });
 
 router.put('/:id', async (req,res)=>{
-    const {status} = req.body;
-    await Course.findByIdAndUpdate(req.params.id,{status:status});
-    res.json({status:'Status updated'});
+    const answer=[];
+    await Course.findByIdAndUpdate(req.params.id,{status:''});
+    const courses = await Course.find().sort({created_at:'desc'});
+    answer.push({status: 'warning', description: 'El curso fue cerrado'});
+    res.render('courses/courses',{
+        courses,
+        answer
+    });
 });
 
 router.put('/delete/:id', async (req,res)=>{
