@@ -1,0 +1,54 @@
+<div class="accordion" id="accordionEnrolles">
+    {{#each courses as |course _id|}}
+    <div class="card">
+        <div class="card-header" id="heading{{_id}}">
+            <h2 class="mb-0">
+                <button class="btn btn-light btn-block collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapse{{_id}}" aria-expanded="false" aria-controls="collapse{{_id}}">
+                    {{course.nameCourse}}
+                </button>
+            </h2>
+        </div>
+        <div id="collapse{{_id}}" class="collapse" aria-labelledby="heading{{_id}}" data-parent="#accordionEnrolles">
+            <div class="card-body">
+                <table class="table table-hover table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each enrollees}}
+                        <tr>
+                            <th scope="row">{{dni}}</th>
+                            <td>{{name}}</td>
+                            <td>{{email}}</td>
+                            <td>{{phone}}</td>
+                            <td>
+                                <form action="/api/courses/delete/{{course.id}}?_method=PUT" method="POST">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <input type="hidden" name="dni" value="{{dni}}">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-danger btn-block">
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <th scope="row" colspan="5">No hay personas inscritas a este curso</th>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
