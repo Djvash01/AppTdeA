@@ -37,7 +37,8 @@ router.post('/', async (req, res)=>{
     }catch(err){
         console.log('error',err);
         answer.push({status: 'danger', description: 'El id del curso ya esta en uso'});
-        res.render('courses/courses',{answer});
+        const courses = await Course.find().sort({created_at:'desc'});
+        res.render('courses/courses',{answer,courses});
     }
     
 });
