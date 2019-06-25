@@ -50,6 +50,7 @@ app.use((req, res, next)=>{
 //Routes
 app.use(require('./routes/index.routes'));
 app.use('/api/courses',require('./routes/courses.routes'));
+app.use('/api/users', require('./routes/user.routes'));
 
 
 //Static files
