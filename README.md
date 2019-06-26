@@ -1,7 +1,7 @@
 # AppTdeA
 Aplicacion de  cursos para la TDEA
 
-Para desplegar la app se deve situar en la raiz del proyecto y ejecutar los comandos:
+Para desplegar la app se debe situar en la raiz del proyecto y ejecutar los comandos:
 
 1. npm install
 2. npm run dev
