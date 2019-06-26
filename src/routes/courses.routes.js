@@ -1,28 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const Course = require('../models/course');
+const {isAuthenticated} = require('../helpers/auth');
 
-router.get('/applicant/', async (req, res)=>{
+router.get('/applicant/',isAuthenticated, async (req, res)=>{
     const courses = await Course.find({status:'Disponible'});
     res.render('courses/applicant',{courses});
 });
 
-router.get('/enrolles/', async (req,res)=>{
+router.get('/enrolles/',isAuthenticated, async (req,res)=>{
     const courses = await Course.find({status:'Disponible'});
     res.render('courses/enrolles',{courses});
 });
 
-router.get('/', async (req, res)=>{
+router.get('/',isAuthenticated, async (req, res)=>{
     const courses = await Course.find().sort({created_at:'desc'});
     res.render('courses/courses',{courses});
 });
 
-router.get('/:id', async (req, res) =>{
+router.get('/:id',isAuthenticated, async (req, res) =>{
     const course = await Course.findOne({id:req.params.id});
     res.json(course);
 });
 
-router.post('/', async (req, res)=>{
+router.post('/',isAuthenticated, async (req, res)=>{
     const {id,nameCourse,description,cost,mode,hours} = req.body;
     const course = new Course({id,nameCourse,description,cost,mode,hours});
     const answer=[];
@@ -43,7 +44,7 @@ router.post('/', async (req, res)=>{
     
 });
 
-router.put('/enroll/', async (req, res) =>{
+router.put('/enroll/',isAuthenticated, async (req, res) =>{
     const {id, dni, name, email, phone} = req.body;
     const answer=[];
     const courses = await Course.find({status:'Disponible'});
@@ -68,7 +69,7 @@ router.put('/enroll/', async (req, res) =>{
     
 });
 
-router.put('/:id', async (req,res)=>{
+router.put('/:id',isAuthenticated, async (req,res)=>{
     const answer=[];
     await Course.findByIdAndUpdate(req.params.id,{status:''});
     const courses = await Course.find().sort({created_at:'desc'});
@@ -79,7 +80,7 @@ router.put('/:id', async (req,res)=>{
     });
 });
 
-router.put('/delete/:id', async (req,res)=>{
+router.put('/delete/:id',isAuthenticated, async (req,res)=>{
     const {dni} =req.body;
     const answer=[];
     const course = await Course.findOne({id:req.params.id});
@@ -99,7 +100,7 @@ router.put('/delete/:id', async (req,res)=>{
     
 });
 
-router.delete('/:id', async (req, res) =>{
+router.delete('/:id',isAuthenticated, async (req, res) =>{
     res.json('Received');
 });
 

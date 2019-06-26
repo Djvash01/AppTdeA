@@ -7,22 +7,22 @@
            <div class="card-body">
                <form action="/api/users/register" method="POST">
                    <div class="form-group">
-                       <input type="text" name="dni" class="form-control" placeholder="Documento de Identidad" required>
+                       <input type="text" name="dni" class="form-control" placeholder="Documento de Identidad" value="{{dni}}" required>
                    </div>
                    <div class="form-group">
-                       <input type="text" name="name" class="form-control" placeholder="Nombre completo" required>
+                       <input type="text" name="name" class="form-control" placeholder="Nombre completo" value="{{name}}" required>
                    </div>
                    <div class="form-group">
-                       <input type="email" name="email" class="form-control" placeholder="Correo Electronico" required>
+                       <input type="email" name="email" class="form-control" placeholder="Correo Electronico" value="{{email}}" required>
                    </div>
                    <div class="form-group">
-                       <input type="number" min="0" name="phone" class="form-control" placeholder="Telefono" required>
+                       <input type="number" min="0" name="phone" class="form-control" placeholder="Telefono" value="{{phone}}" required>
                    </div>
                    <div class="form-group">
-                       <input type="password" name="password" class="form-control" placeholder="Constraseña" required>
+                       <input type="password" name="password" class="form-control" placeholder="Constraseña" value="{{password}}" required>
                    </div>
                    <div class="form-group">
-                       <input type="password" name="confirm_password" class="form-control" placeholder="Confirma tu Constraseña" required>
+                       <input type="password" name="confirm_password" class="form-control" placeholder="Confirma tu Constraseña" value="{{confirm_password}}" required>
                    </div>
                    <div class="form-group">
                        <button type="submit" class="btn btn-primary btn-block">
