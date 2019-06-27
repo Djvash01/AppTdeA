@@ -13,7 +13,7 @@ router.get('/login', (req, res) =>{
 });
 
 router.post('/register', async (req, res)=>{
-    const {dni, name, email, phone, password, confirm_password} = req.body;
+    const {dni, name, email, phone, password, confirm_password,rol} = req.body;
     const answer = [];
     if(password != confirm_password){
         answer.push({status: 'danger', description: 'Las contraseñas no coinciden'});
@@ -25,7 +25,7 @@ router.post('/register', async (req, res)=>{
         res.render('users/register',{answer, dni, name, email, phone, password,confirm_password});
     }else{
         try{
-            const user = new User({dni, name, email, phone, password});
+            const user = new User({dni, name, email, phone, password, rol});
             user.password = await user.encryptPassword(password);    
             await user.save();
             req.flash('answer',{status: 'success', description: 'Has sido registrado con exito'});
@@ -38,7 +38,7 @@ router.post('/register', async (req, res)=>{
 });
 
 router.post('/login',passport.authenticate('local',{
-    successRedirect: '/api/courses',
+    successRedirect: '/',
     failureRedirect: '/api/users/login',
     failureFlash: true
 }));

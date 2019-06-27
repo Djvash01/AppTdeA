@@ -16,6 +16,7 @@ const passport = require('passport');
 const app = express();
 require('./database'); // Iniciar la base de datos
 require('./config/passport'); // para usar la autenticacion
+const {isAuthenticated} = require('./helpers/auth');
 
 //Settings
 app.set('port', process.env.PORT || 3000);
@@ -44,16 +45,18 @@ app.use(flash());
 app.use(cors());
 
 
+
 //Global Variables
 app.use((req, res, next)=>{
     res.locals.answer = req.flash('answer');
     res.locals.error = req.flash('error');
+    res.locals.user = req.user || null ;
     next();
 });
 
 //Routes
 app.use(require('./routes/index.routes'));
-app.use('/api/courses',require('./routes/courses.routes'));
+app.use('/api/courses', isAuthenticated, require('./routes/courses.routes'));
 app.use('/api/users', require('./routes/user.routes'));
 
 
