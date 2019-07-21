@@ -14,6 +14,8 @@ const passport = require('passport');
 
 //Initializations
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 require('./database'); // Iniciar la base de datos
 require('./config/passport'); // para usar la autenticacion
 const {isAuthenticated} = require('./helpers/auth');
@@ -56,6 +58,7 @@ app.use((req, res, next)=>{
 
 //Routes
 app.use(require('./routes/index.routes'));
+app.use(require('./routes/chat.routes'));
 app.use('/api/courses', isAuthenticated, require('./routes/courses.routes'));
 app.use('/api/users', require('./routes/user.routes'));
 
@@ -64,7 +67,22 @@ app.use('/api/users', require('./routes/user.routes'));
 app.use(express.static(path.join(__dirname,'public')));
 
 
+//websockets
+io.on('connection', (socket) => { 
+    console.log('Usuario conectados', socket.id);
+
+    socket.on('chat:message', (data)=>{
+        io.sockets.emit('chat:message', data);
+    });
+
+    socket.on('chat:typing', (data)=>{
+        socket.broadcast.emit('chat:typing',data);
+    });
+});
+
 //Starting the server
-app.listen(app.get('port'), ()=>{
+server.listen(app.get('port'), ()=>{
     console.log(`Server on port ${app.get('port')}`);
 });
+
+//
