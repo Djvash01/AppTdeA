@@ -4,11 +4,17 @@ const Event = require('../models/event');
 
 eventsCtrl.getEvents = async (req, res) => {
     const events = await Event.find();
-    res.json(events);
+    res.render('events/all-events',{events});
 };
 
 eventsCtrl.addEvent = (req, res) =>{
     res.render('events/new-event');
+}
+
+eventsCtrl.editEvent =async (req, res) =>{
+    const {id} = req.params;
+    const event = await Event.findById(id);
+    res.render('events/edit-event', {event});
 }
 
 eventsCtrl.createEvents = async(req, res) => {
@@ -16,11 +22,14 @@ eventsCtrl.createEvents = async(req, res) => {
     const newEvent = new Event({
         title, 
         content,  
-        supervisor
+        supervisor,
+        startDate,
+        finishDate
     });
     console.log(newEvent);
     await newEvent.save();
-    res.json({message:'Event saved'});
+    const events = await Event.find();
+    res.render('events/all-events',{events});
 };
 
 eventsCtrl.getEvent = async (req, res) => {
@@ -39,13 +48,13 @@ eventsCtrl.updateEvent = async (req, res) => {
         finishDate, 
         supervisor
     });
-    res.json({message:'Event updated'});
+    res.redirect('/api/events');
 };
 
 eventsCtrl.deleteEvent = async (req, res) => {
     const {id} = req.params;
     await Event.findByIdAndDelete(id);
-    res.json({message:'Event deleted'});
+    res.redirect('/api/events');
 };
 
 module.exports = eventsCtrl;
