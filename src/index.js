@@ -59,7 +59,7 @@ app.use((req, res, next)=>{
 //Routes
 app.use(require('./routes/index.routes'));
 app.use(require('./routes/chat.routes'));
-app.use('/api/events', require('./routes/event.routes'));
+app.use('/api/events', isAuthenticated, require('./routes/event.routes'));
 app.use('/api/courses', isAuthenticated, require('./routes/courses.routes'));
 app.use('/api/users', require('./routes/user.routes'));
 
